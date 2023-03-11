@@ -1,34 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import Lights from './Components/Lights';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const aspectRatio = window.innerWidth / window.innerHeight;
+  const cameraWidth = 2000;
+  const cameraHeight = cameraWidth / aspectRatio;
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="w-screen h-screen bg-white">
+      <Canvas frameloop="demand" className="bg-blue-300">
+        <Suspense fallback={null}></Suspense>
+        <OrbitControls />
+        <Lights />
+        {/* <mesh>
+          <boxGeometry attach="geometry" args={[1, 1, 1]} />
+          <meshLambertMaterial color={'red'} />
+        </mesh> */}
+      </Canvas>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
