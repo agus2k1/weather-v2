@@ -1,45 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
-import weatherObject from '../../assets/Weather';
+import { useWeatherContext } from '../../context/WeatherContext';
 
 const Search = () => {
+  const { setCityName } = useWeatherContext();
   const [searchTerm, setSearchTerm] = useState('');
-  const [weather, setWeather] = useState({});
+
   const searchValue = useRef();
-
-  //   useEffect(() => {
-  //     fetch(
-  //       'https://api.open-meteo.com/v1/forecast?latitude=-34.61&longitude=-58.38&timezone=GMT&daily=temperature_2m_max,temperature_2m_min'
-  //     )
-  //       .then(async (response) => {
-  //         const weatherResponse = await response.json();
-  //         setWeather(weatherResponse);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }, []);
-
-  useEffect(() => {
-    setWeather(weatherObject);
-  }, []);
-
-  useEffect(() => {
-    console.log(weather);
-  }, [weather]);
 
   useEffect(() => {
     console.log(searchTerm);
   }, [searchTerm]);
 
-  const searchCity = () => {
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    setCityName(searchTerm.toLowerCase());
+    console.log('submit');
+  };
+
+  const handleOnSearch = () => {
     setSearchTerm(searchValue.current.value);
   };
 
   return (
-    <form className="w-50 h-50" onSubmit={(e) => e.preventDefault}>
+    <form className="w-50 h-50" onSubmit={(e) => handleOnSubmit(e)}>
       <div className="p-4">
-        <label htmlFor="name" className="text-black">
+        <label htmlFor="name" className="mr-2">
           Search for city
         </label>
-        <input type="text" id="name" ref={searchValue} onChange={searchCity} />
+        <input
+          type="text"
+          id="name"
+          ref={searchValue}
+          onChange={handleOnSearch}
+        />
       </div>
     </form>
   );
