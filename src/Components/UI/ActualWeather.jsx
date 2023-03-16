@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useWeatherContext } from '../../context/WeatherContext';
 
-const ActualWeather = ({ temp, wind, minTemp }) => {
-  const { day } = useWeatherContext();
+const ActualWeather = ({ wind, minTemp }) => {
+  const { weatherData, day, getWeatherLogo } = useWeatherContext();
+
+  const temp = Math.round(weatherData?.current_weather.temperature);
+
+  const logo = getWeatherLogo(weatherData?.current_weather.weathercode, false);
 
   return (
     <>
       <div className="flex items-center justify-between mt-3">
-        <p className="text-8xl font-semibold pt-5 pl-1">{temp}</p>
+        <p className="text-8xl font-semibold pt-5 pl-1">{temp + 'º'}</p>
         <img
-          src="/design/fill/animation-ready/rain.svg"
-          alt="rain"
+          src={`/design/fill/animation-ready/${logo}.svg`}
+          alt={logo}
           className="w-32"
         />
       </div>
