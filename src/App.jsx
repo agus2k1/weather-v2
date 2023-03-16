@@ -18,10 +18,12 @@ const App = () => {
   // const cameraHeight = cameraWidth / aspectRatio;
 
   const handleTabClick = () => {
-    if (start) {
-      setStart(false);
+    if (cityName) {
+      if (start) {
+        setStart(false);
+      }
+      setOpenTab((prevState) => !prevState);
     }
-    setOpenTab((prevState) => !prevState);
   };
 
   return (
@@ -31,8 +33,9 @@ const App = () => {
         <span className="flex items-start gap-5">
           <img src="/location-logo.png" alt="location" className="w-12" />
           <p className="h-12 text-5xl font-extralight">
-            {cityName &&
-              cityName[0].toUpperCase() + cityName.slice(1, cityName.length)}
+            {cityName
+              ? cityName[0].toUpperCase() + cityName.slice(1, cityName.length)
+              : 'London'}
           </p>
         </span>
         <Search />
