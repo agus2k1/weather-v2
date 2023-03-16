@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useWeatherContext } from '../../context/WeatherContext';
 
 const Search = () => {
@@ -6,10 +6,6 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const searchValue = useRef();
-
-  useEffect(() => {
-    console.log(searchTerm);
-  }, [searchTerm]);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
