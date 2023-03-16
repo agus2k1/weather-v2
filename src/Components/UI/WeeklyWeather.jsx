@@ -3,12 +3,12 @@ import DailyWeather from './DailyWeather';
 import { useWeatherContext } from '../../context/WeatherContext';
 
 const WeeklyWeather = () => {
-  const { getFollowingDays } = useWeatherContext();
+  const { weatherData, getFollowingDays } = useWeatherContext();
   const [followingDays, setFollowingDays] = useState([]);
 
   useEffect(() => {
-    setFollowingDays(getFollowingDays());
-  }, []);
+    if (weatherData) setFollowingDays(getFollowingDays());
+  }, [weatherData]);
 
   return (
     <>
