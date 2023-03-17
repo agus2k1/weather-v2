@@ -3,14 +3,14 @@ import Search from './Components/Functionality/Search';
 import FooterTabs from './Components/Functionality/FooterTabs';
 import ActualWeather from './Components/UI/ActualWeather';
 import WeeklyWeather from './Components/UI/WeeklyWeather';
-import DailyWeather from './Components/UI/DailyWeather';
+import Loader from './Components/UI/Loader';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import Lights from './Components/Canvas/Lights';
 import { useWeatherContext } from './context/WeatherContext';
 
 const App = () => {
-  const { cityName } = useWeatherContext();
+  const { weatherData, cityName } = useWeatherContext();
   const [start, setStart] = useState(true);
   const [openTab, setOpenTab] = useState(null);
   // const aspectRatio = window.innerWidth / window.innerHeight;
@@ -33,9 +33,8 @@ const App = () => {
         <span className="flex items-start gap-5">
           <img src="/location-logo.png" alt="location" className="w-12" />
           <p className="h-12 text-5xl font-extralight">
-            {cityName
-              ? cityName[0].toUpperCase() + cityName.slice(1, cityName.length)
-              : 'London'}
+            {cityName &&
+              cityName[0].toUpperCase() + cityName.slice(1, cityName.length)}
           </p>
         </span>
         <Search />
@@ -48,23 +47,20 @@ const App = () => {
         {!start && (
           <div
             // bg-slate-300 or bg-gray-400
-            className={`pl-20 bg-slate-300 bg-opacity-50 backdrop-blur-lg ${
+            className={`w-full h-full bg-slate-300 bg-opacity-50 backdrop-blur-lg ${
               openTab ? 'animate-openTab' : 'animate-closeTab'
             }`}
           >
-            <div className="h-full w-full flex justify-between">
-              <div className=" pr-14">
-                <ActualWeather
-                  temp={'28º'}
-                  day={'MONDAY 27th'}
-                  wind={'4 mph'}
-                  minTemp={'67º'}
-                />
-              </div>
-              <div className=" flex">
+            {weatherData ? (
+              <div className="h-full flex justify-between">
+                <ActualWeather wind={'4 mph'} minTemp={'67º'} />
                 <WeeklyWeather />
               </div>
-            </div>
+            ) : (
+              <div className="h-full w-full flex justify-center items-center">
+                <Loader />
+              </div>
+            )}
           </div>
         )}
       </div>
