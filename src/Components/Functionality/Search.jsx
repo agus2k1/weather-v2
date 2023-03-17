@@ -30,7 +30,6 @@ const Search = () => {
   const handleOnSearch = () => {
     const actualSearch = searchValue.current.value;
     setSearchTerm(actualSearch);
-    console.log(actualSearch);
 
     const filter = cities.filter((city) =>
       city.name.toLowerCase().includes(actualSearch.toLowerCase())
@@ -51,7 +50,7 @@ const Search = () => {
 
   return (
     <form className="w-56 h-52" onSubmit={(e) => handleOnSubmit(e)}>
-      <div className="w-full mt-4 py-1 px-2 flex items-center bg-white rounded-lg border-none">
+      <div className="w-full py-1 px-2 flex items-center bg-white rounded-lg border-none">
         <input
           type="text"
           id="name"
