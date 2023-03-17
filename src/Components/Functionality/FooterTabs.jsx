@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Tab from './Tab';
+import tabs from '../../assets/tabs';
 
 function FooterTabs() {
   return (
-    <>
-      <Tab name={'Weather'} logo={'wi_partly-cloudy-day'} color={'#f59e0b'} />
-      <Tab name={'Weather'} logo={'wi_partly-cloudy-day'} color={'#6366f1'} />
-      <Tab name={'Weather'} logo={'wi_partly-cloudy-day'} color={'#10b981'} />
-    </>
+    <div className="flex">
+      {tabs.map((tab, i) => {
+        const { name, color, logo } = tab;
+        return (
+          <Tab key={name + i} index={i} name={name} logo={logo} color={color} />
+        );
+      })}
+    </div>
   );
 }
 
