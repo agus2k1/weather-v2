@@ -5,6 +5,13 @@ module.exports = {
     './src/components/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
+    screens: {
+      xxs: '335px',
+      xs: '530px',
+      sm: '620px',
+      md: '960px',
+      lg: '1440px',
+    },
     extend: {
       backgroundImage: {
         rain: "url('/bk-images/rain-background-2.jpg')",
@@ -25,5 +32,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 };
