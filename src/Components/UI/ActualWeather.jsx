@@ -1,12 +1,14 @@
 import React from 'react';
 import { useWeatherContext } from '../../context/WeatherContext';
 
-const ActualWeather = ({ wind, minTemp }) => {
+const ActualWeather = ({ minTemp }) => {
   const { weatherData, day, getWeatherLogo } = useWeatherContext();
 
   const temp = Math.round(weatherData?.current_weather.temperature);
 
   const logo = getWeatherLogo(weatherData?.current_weather.weathercode, false);
+
+  const wind = Math.round(weatherData?.current_weather.windspeed);
 
   return (
     <div className="w-auto pl-10 pr-6 flex gap-4 xxs:pl-6 xs:pl-10">
@@ -23,7 +25,9 @@ const ActualWeather = ({ wind, minTemp }) => {
           className="w-32 xxs:w-20 xs:w-32"
         />
         <p className="text-1xl font-bold">
-          {wind} <span className="text-slate-400">/</span> {minTemp}
+          {wind + ' ' + 'kmh'}
+          {/* <span className="text-slate-400">/</span>{' '} */}
+          {/* {minTemp} */}
         </p>
       </div>
     </div>
