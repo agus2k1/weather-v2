@@ -24,7 +24,7 @@ export const WeatherProvider = ({ children }) => {
   const [weatherData, setWeatherData] = useState();
   const [cityData, setCityData] = useState();
   const [day, setDay] = useState('');
-  const [cityName, setCityName] = useState('');
+  const [cityName, setCityName] = useState('London');
   const [isNight, setIsNight] = useState(false);
 
   const getWeatherLogo = (code) => {
@@ -98,8 +98,6 @@ export const WeatherProvider = ({ children }) => {
     return finalArray;
   };
 
-  console.log(cityName);
-
   // useEffect(() => {
   //   if (cityData) {
   //     fetch(
@@ -134,14 +132,6 @@ export const WeatherProvider = ({ children }) => {
     setDay(daysInAWeek[actualDayIndex]);
   }, []);
 
-  // useEffect(() => {
-  //   console.log(weatherData);
-  // }, [weatherData]);
-
-  // useEffect(() => {
-  //   console.log(cityData);
-  // }, [cityData]);
-
   useEffect(() => {
     console.log(cityName);
   }, [cityName]);
@@ -152,6 +142,7 @@ export const WeatherProvider = ({ children }) => {
         weatherData,
         day,
         cityName,
+        setWeatherData,
         setCityName,
         getFollowingDays,
         getWeatherLogo,
