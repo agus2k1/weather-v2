@@ -20,7 +20,12 @@ const daysInAWeek = [
 
 const actualDayIndex = new Date().getDay();
 
+const time = new Date().getHours();
+
 export const WeatherProvider = ({ children }) => {
+  const [start, setStart] = useState(true);
+  const [openTab, setOpenTab] = useState(null);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [weatherData, setWeatherData] = useState();
   const [cityData, setCityData] = useState();
   const [day, setDay] = useState('');
@@ -98,50 +103,59 @@ export const WeatherProvider = ({ children }) => {
     return finalArray;
   };
 
-  // useEffect(() => {
-  //   if (cityData) {
-  //     fetch(
-  //       `https://api.open-meteo.com/v1/forecast?latitude=${cityData.lat}&longitude=${cityData.lon}&timezone=auto&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_mean,windspeed_10m_max`
-  //     )
-  //       .then(async (response) => {
-  //         const weatherResponse = await response.json();
-  //         setWeatherData(weatherResponse);
-  //         console.log(weatherResponse);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [cityData]);
-
-  // useEffect(() => {
-  //   if (cityName) {
-  //     const cityNameAPI = cityName.split(' ').join('');
-  //     fetch(
-  //       `https://nominatim.openstreetmap.org/search?q=${cityNameAPI}&format=json&limit=1`
-  //     )
-  //       .then(async (response) => {
-  //         const cityResponse = await response.json();
-  //         setCityData(cityResponse[0]);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [cityName]);
+  useEffect(() => {
+    if (cityData) {
+      fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${cityData.lat}&longitude=${cityData.lon}&timezone=auto&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_mean,windspeed_10m_max`
+      )
+        .then(async (response) => {
+          const weatherResponse = await response.json();
+          setWeatherData(weatherResponse);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [cityData]);
 
   useEffect(() => {
-    setWeatherData(weatherObject);
-    setCityData(cityObject);
+    if (cityName) {
+      const cityNameAPI = cityName.split(' ').join('');
+      fetch(
+        `https://nominatim.openstreetmap.org/search?q=${cityNameAPI}&format=json&limit=1`
+      )
+        .then(async (response) => {
+          const cityResponse = await response.json();
+          setCityData(cityResponse[0]);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [cityName]);
+
+  useEffect(() => {
+    // setWeatherData(weatherObject);
+    // setCityData(cityObject);
     setDay(daysInAWeek[actualDayIndex]);
   }, []);
 
   useEffect(() => {
-    console.log(cityName);
+    if (time <= 6 || time >= 19) {
+      setIsNight(true);
+    } else {
+      setIsNight(false);
+    }
   }, [cityName]);
 
   return (
     <WeatherContext.Provider
       value={{
+        start,
+        openTab,
+        activeTabIndex,
         weatherData,
         day,
         cityName,
+        setStart,
+        setOpenTab,
+        setActiveTabIndex,
         setWeatherData,
         setCityName,
         getFollowingDays,
