@@ -11,7 +11,13 @@ const WeeklyWeather = () => {
   }, [weatherData]);
 
   return (
-    <>
+    <div className="w-[100%] items-center sm:flex sm:w-auto relative">
+      <img src="/arrow-left.svg" alt="" className="absolute top-20 sm:hidden" />
+      <img
+        src="/arrow-right.svg"
+        alt=""
+        className="absolute top-20 right-0 sm:hidden"
+      />
       {followingDays.map((day) => {
         const { weekDay, logo, temp } = day;
         const dayChars = weekDay.slice(0, 3);
@@ -19,7 +25,7 @@ const WeeklyWeather = () => {
           <DailyWeather key={dayChars} day={dayChars} logo={logo} temp={temp} />
         );
       })}
-    </>
+    </div>
   );
 };
 
